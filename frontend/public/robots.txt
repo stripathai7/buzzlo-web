@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Allow: /features
+Allow: /pricing
+Allow: /contact
+Disallow: /dashboard
+Disallow: /login
+Disallow: /subscription
+Disallow: /whatsapp-setup
+
+Sitemap: https://buzzlo.biz/sitemap.xml
