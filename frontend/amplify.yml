@@ -3,18 +3,18 @@ frontend:
   phases:
     preBuild:
       commands:
-        # Use npm ci for reproducible installs (respects package-lock.json)
         - npm ci
     build:
       commands:
         - npm run build
+        # Copy public assets and static chunks into the standalone bundle
+        - cp -r public .next/standalone/public
+        - cp -r .next/static .next/standalone/.next/static
   artifacts:
-    baseDirectory: .next
+    baseDirectory: .next/standalone
     files:
       - '**/*'
   cache:
     paths:
-      # Cache node_modules across builds to cut preBuild time.
       - node_modules/**/*
-      # Cache Next.js build cache for faster incremental rebuilds.
       - .next/cache/**/*
