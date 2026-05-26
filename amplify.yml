@@ -10,7 +10,8 @@ applications:
           commands:
             - npm run build
       artifacts:
-        baseDirectory: .next
+        # next.config.ts sets output:'export' — Next.js writes static files to out/
+        baseDirectory: out
         files:
           - '**/*'
       cache:

@@ -9,9 +9,8 @@ frontend:
       commands:
         - npm run build
   artifacts:
-    # Next.js standalone output or the standard .next directory.
-    # Amplify's Next.js SSR adapter picks up .next automatically.
-    baseDirectory: .next
+    # next.config.ts sets output:'export' — Next.js writes static files to out/
+    baseDirectory: out
     files:
       - '**/*'
   cache:
