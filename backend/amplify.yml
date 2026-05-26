@@ -1,10 +1,26 @@
 version: 1
-backend:
+frontend:
   phases:
+    preBuild:
+      commands:
+        # Install Python 3.11 if needed (Amplify build images ship Python 3.8 by default)
+        - python3 --version
+        # Use a virtualenv so pip install is isolated from the build image
+        - python3 -m venv .venv
+        - source .venv/bin/activate
+        - pip install --upgrade pip
+        - pip install -r requirements.txt
     build:
       commands:
-        - pip install -r requirements.txt
+        # Amplify expects a build phase; FastAPI has no compile step.
+        # We just verify the app can be imported (smoke-test import).
+        - source .venv/bin/activate
+        - python3 -c "from main import app; print('FastAPI app loaded OK')"
   artifacts:
+    # Ship the entire backend directory including the venv so Uvicorn can start.
     baseDirectory: .
     files:
       - '**/*'
+  cache:
+    paths:
+      - .venv/**/*

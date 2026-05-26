@@ -1,0 +1,22 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        # Use npm ci for reproducible installs (respects package-lock.json)
+        - npm ci
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    # Next.js standalone output or the standard .next directory.
+    # Amplify's Next.js SSR adapter picks up .next automatically.
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      # Cache node_modules across builds to cut preBuild time.
+      - node_modules/**/*
+      # Cache Next.js build cache for faster incremental rebuilds.
+      - .next/cache/**/*
