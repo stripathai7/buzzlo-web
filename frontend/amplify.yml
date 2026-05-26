@@ -9,8 +9,7 @@ frontend:
       commands:
         - npm run build
   artifacts:
-    # next.config.ts sets output:'export' — Next.js writes static files to out/
-    baseDirectory: out
+    baseDirectory: .next
     files:
       - '**/*'
   cache:
