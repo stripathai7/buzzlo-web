@@ -1,5 +1,29 @@
 version: 1
 applications:
+  # ── Frontend (Next.js) ──────────────────────────────────────────────────────
+  - appRoot: frontend
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - npm ci
+        build:
+          commands:
+            - npm run build
+      artifacts:
+        baseDirectory: .next
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
+          - .next/cache/**/*
+    # Only rebuild when files under frontend/ change
+    buildSpec:
+      ignorePaths:
+        - backend/**/*
+
+  # ── Backend (FastAPI / uvicorn) ─────────────────────────────────────────────
   - appRoot: backend
     frontend:
       phases:
@@ -20,3 +44,7 @@ applications:
       cache:
         paths:
           - .venv/**/*
+    # Only rebuild when files under backend/ change
+    buildSpec:
+      ignorePaths:
+        - frontend/**/*
